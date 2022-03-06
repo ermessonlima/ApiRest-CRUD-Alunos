@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import getUserPage from '../controllers/UserController';
+import userController from '../controllers/UserController';
+import tokenAutorization from '../middlewares/loginRequired';
 
 const router = new Router();
 
-router.post('/', getUserPage.store);
-router.get('/', getUserPage.index);
-router.get('/:id', getUserPage.show);
-router.put('/:id', getUserPage.update);
-router.delete('/:id', getUserPage.delete);
+// router.get('/', userController.index);
+// router.get('/:id', userController.show);
+
+router.post('/', userController.store); // Create user
+router.put('/', tokenAutorization, userController.update); // Update user
+router.delete('/', tokenAutorization, userController.delete); // Delete user
 
 export default router;
